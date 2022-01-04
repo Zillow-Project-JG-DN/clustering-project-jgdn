@@ -1,9 +1,6 @@
 # classification-project
-<<<<<<< HEAD
-The repository contains the files for Jared Godar's Codeup project on clustering and modeling of zillo real estate data to predict error estimates
-=======
-The repsitory contains the files for Jared Godar's Codeup project on clustering and modeling of zillo real estate data to predict error estimates
->>>>>>> 6eacb1601455c50c68dc0df02c810ec0e0e3c7f7
+
+The repository contains the files for Daniel Northcutt and Jared Godar's Codeup project on clustering and modeling of zillo real estate data to predict error estimates
 
 ---
 
