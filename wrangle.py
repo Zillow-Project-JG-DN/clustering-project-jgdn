@@ -12,7 +12,7 @@ import env
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 
-################ PULL DATA FROM DB ############## 
+################ PULL DATA FROM DB ##############
 
 
 def get_db_url(database):
@@ -60,65 +60,67 @@ def get_zillow():
     return df
 
 
-
 #### INITIAL MVP DROP THEM ALL MISSING VALUES FUNCTION #########
 
-def handle_missing_values(df, prop_required_column = .5, prop_required_row = .70):
-    threshold = int(round(prop_required_column*len(df.index),0))
+def handle_missing_values(df, prop_required_column=.5, prop_required_row=.70):
+    threshold = int(round(prop_required_column*len(df.index), 0))
     df.dropna(axis=1, thresh=threshold, inplace=True)
-    threshold = int(round(prop_required_row*len(df.columns),0))
+    threshold = int(round(prop_required_row*len(df.columns), 0))
     df.dropna(axis=0, thresh=threshold, inplace=True)
     return df
 
 
-######## DROP COLUMNS
+# DROP COLUMNS
 
-def remove_columns(df, cols_to_remove):  
+def remove_columns(df, cols_to_remove):
     '''
     Pass a list od columns to remove
     '''
     df = df.drop(columns=cols_to_remove)
     return df
 
+
 def import_csv():
     '''
     Brings in previous stored spreadsheet
     '''
     df = pd.read_csv('zillow.csv')
-    
+
+
 def single_use(df):
     '''
     Ensures we are only looking at single use properties with at least one bedroom and >= 350 sf.
     '''
     single_use = [261, 262, 263, 264, 266, 268, 273, 276, 279]
     df = df[df.propertylandusetypeid.isin(single_use)]
-    df = df[(df.bedroomcnt > 0) & (df.bathroomcnt > 0) & ((df.unitcnt<=1)|df.unitcnt.isnull())\
-            & (df.calculatedfinishedsquarefeet>350)]
+    df = df[(df.bedroomcnt > 0) & (df.bathroomcnt > 0) & ((df.unitcnt <= 1) | df.unitcnt.isnull())
+            & (df.calculatedfinishedsquarefeet > 350)]
     return df
+
 
 def add_county(df):
     '''
     Add column for counties
     '''
     df['county'] = np.where(df.fips == 6037, 'Los_Angeles',
-                           np.where(df.fips == 6059, 'Orange', 
-                                   'Ventura'))    
+                            np.where(df.fips == 6059, 'Orange',
+                                     'Ventura'))
     # drop columns not needed
     df = remove_columns(df, ['id',
-       'calculatedbathnbr', 'finishedsquarefeet12', 'fullbathcnt', 'heatingorsystemtypeid'
-       ,'propertycountylandusecode', 'propertylandusetypeid','propertyzoningdesc', 
-        'censustractandblock', 'propertylandusedesc','heatingorsystemdesc','unitcnt'
-                            ,'buildingqualitytypeid'])
-    
-def clean(df):    
+                             'calculatedbathnbr', 'finishedsquarefeet12', 'fullbathcnt', 'heatingorsystemtypeid', 'propertycountylandusecode', 'propertylandusetypeid', 'propertyzoningdesc',
+                             'censustractandblock', 'propertylandusedesc', 'heatingorsystemdesc', 'unitcnt', 'buildingqualitytypeid'])
+
+
+def clean(df):
     # replace nulls with median values for select columns
-    df.lotsizesquarefeet.fillna(7313, inplace = True)
+    df.lotsizesquarefeet.fillna(7313, inplace=True)
     # Columns to look for outliers
     df = df[df.taxvaluedollarcnt < 5_000_000]
     df[df.calculatedfinishedsquarefeet < 8000]
     # Just to be sure we caught all nulls, drop them here
     df = df.dropna()
     return df
+
 
 def min_max_scaler(train, valid, test):
     '''
@@ -127,22 +129,39 @@ def min_max_scaler(train, valid, test):
     This is a linear transformation. Values will lie between 0 and 1
     '''
     num_vars = list(train.select_dtypes('number').columns)
-    scaler = MinMaxScaler(copy=True, feature_range=(0,1))
+    scaler = MinMaxScaler(copy=True, feature_range=(0, 1))
     train[num_vars] = scaler.fit_transform(train[num_vars])
     valid[num_vars] = scaler.transform(valid[num_vars])
     test[num_vars] = scaler.transform(test[num_vars])
     return scaler, train, valid, test
 
+
 def outlier_function(df, cols, k):
-	#function to detect and handle oulier using IQR rule
+    # function to detect and handle oulier using IQR rule
     for col in df[cols]:
         q1 = df.annual_income.quantile(0.25)
         q3 = df.annual_income.quantile(0.75)
         iqr = q3 - q1
-        upper_bound =  q3 + k * iqr
-        lower_bound =  q1 - k * iqr     
+        upper_bound = q3 + k * iqr
+        lower_bound = q1 - k * iqr
         df = df[(df[col] < upper_bound) & (df[col] > lower_bound)]
     return df
 
+
 def wrangle():
-    df = get_data_from_sql()
+    #df = get_zillow()
+    # df.to_csv('unedited_zillow.csv')
+    df = pd.read_csv('unedited_zillow.csv')
+    df = single_use(df)
+    df = add_county(df)
+    df = handle_missing_values(df)
+    df = clean(df)
+    #columns=['bathroomcnt', 'bedroomcnt', 'calculatedbathnbr', 'calculatedfinishedsquarefeet', 'finishedsquarefeet12', 'fullbathcnt', 'lotsizesquarefeet', 'roomcnt', 'unitcnt','structuretaxvaluedollarcnt', 'taxvaluedollarcnt','taxamount']
+    #df = remove_outliers(df, columns)
+    train, validate, test = split_my_data(df)
+    train, validate, test = add_baseline(train, validate, test)
+    train, X_train, y_train, X_validate, y_validate, X_test, y_test = split_xy(
+        train, validate, test)
+    X_train, X_validate, X_test = scale(
+        X_train, X_validate, X_test, train, validate, test)
+    return train, X_train, y_train, X_validate, y_validate, X_test, y_test
