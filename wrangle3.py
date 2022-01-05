@@ -14,6 +14,8 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 import statsmodels.api as sm
+from sklearn.cluster import KMeans
+
 
 from datetime import date
 
@@ -24,6 +26,9 @@ from sklearn.preprocessing import MinMaxScaler
 
 import warnings
 warnings.filterwarnings("ignore")
+
+pd.set_option("display.max_columns", None)
+pd.set_option("display.max_rows", None)
 
 # Custim functions
 
@@ -283,6 +288,27 @@ def remove_outliers(df):
                )]
 
 
+def create_clusters(X_train, k, cluster_vars):
+    # create kmean object
+    kmeans = KMeans(n_clusters=k, random_state=13)
+
+    # fit to train and assign cluster ids to observations
+    kmeans.fit(X_train[cluster_vars])
+
+    return kmeans
+
+
+def get_centroids(kmeans, cluster_vars, cluster_name):
+    # get the centroids for each distinct cluster...
+
+    centroid_col_names = ['centroid_' + i for i in cluster_vars]
+
+    centroid_df = pd.DataFrame(kmeans.cluster_centers_,
+                               columns=centroid_col_names).reset_index().rename(columns={'index': cluster_name})
+
+    return centroid_df
+
+
 def wrangle():
     df = pd.read_csv('zillow_wrangle3.csv')
     df = single_use(df)
@@ -299,4 +325,11 @@ def wrangle():
         train, validate, test)
     X_train, X_validate, X_test = scale(
         X_train, X_validate, X_test)
+    k = 6
+    cluster_vars = ['scaled_latitude', 'scaled_longitude', 'age_bin']
+    cluster_name = 'area_cluster'
+    kmeans = create_clusters(X_train, k, cluster_vars)
+    centroid_df = get_centroids(kmeans, cluster_vars, cluster_name)
+    X_train['area_cluster'] = kmeans.predict(X_train[cluster_vars])
+    X_validate['area_cluster'] = kmeans.predict(X_validate[cluster_vars])
     return train, X_train, y_train, X_validate, y_validate, X_test, y_test
