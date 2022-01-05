@@ -193,17 +193,20 @@ def split_xy(train, validate, test):
     return train, X_train, y_train, X_validate, y_validate, X_test, y_test
 
 
-def scale(X_train, X_validate, X_test, train, validate, test):
+def scale(X_train, X_validate, X_test):
     '''
     Uses the train & test datasets created by the split_my_data function
     Returns 3 items: mm_scaler, train_scaled_mm, test_scaled_mm
     This is a linear transformation. Values will lie between 0 and 1
     '''
-    num_vars = list(X_train.select_dtypes('number').columns)
+    scaled_vars = ['latitude', 'longitude', 'bathroomcnt', 'taxrate', 'bedroomcnt',
+                   'lotsizesquarefeet', 'age', 'acres',  'bath_bed_ratio', 'calculatedfinishedsquarefeet']
+    scaled_column_names = ['scaled_' + i for i in scaled_vars]
+    #num_vars = list(X_train.select_dtypes('number').columns)
     scaler = MinMaxScaler(copy=True, feature_range=(0, 1))
-    train[num_vars] = scaler.fit_transform(X_train[num_vars])
-    validate[num_vars] = scaler.transform(X_validate[num_vars])
-    test[num_vars] = scaler.transform(X_test[num_vars])
+    X_train[scaled_column_names] = scaler.fit_transform(X_train[scaled_vars])
+    X_validate[scaled_column_names] = scaler.transform(X_validate[scaled_vars])
+    X_test[scaled_column_names] = scaler.transform(X_test[scaled_vars])
     return X_train, X_validate, X_test
 
 
@@ -289,9 +292,11 @@ def wrangle():
     df = create_features(df)
     df = remove_outliers(df)
     train, validate, test = split_my_data(df)
+    train['logerror_bins'] = pd.cut(
+        train.logerror, [-5, -.2, -.05, .05, .2, 4])
     train, validate, test = add_baseline(train, validate, test)
     train, X_train, y_train, X_validate, y_validate, X_test, y_test = split_xy(
         train, validate, test)
     X_train, X_validate, X_test = scale(
-        X_train, X_validate, X_test, train, validate, test)
+        X_train, X_validate, X_test)
     return train, X_train, y_train, X_validate, y_validate, X_test, y_test
