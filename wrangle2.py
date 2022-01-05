@@ -118,10 +118,10 @@ def remove_columns(df, cols_to_remove):
 
 def clean(df):
     # replace nulls with median values for select columns
-    df.lotsizesquarefeet.fillna(7313, inplace=True)
+    #df.lotsizesquarefeet.fillna(7313, inplace=True)
     # Columns to look for outliers
     df = df[df.taxvaluedollarcnt < 5_000_000]
-    df[df.calculatedfinishedsquarefeet < 8000]
+    #df[df.calculatedfinishedsquarefeet < 8000]
     # Just to be sure we caught all nulls, drop them here
     df = df.dropna()
     return df
@@ -215,7 +215,8 @@ def wrangle():
     df = single_use(df)
     df = add_county(df)
     df = handle_missing_values(df)
-    df = clean(df)
+    #df = clean(df)
+    df = df.dropna()
     train, validate, test = split_my_data(df)
     train, validate, test = add_baseline(train, validate, test)
     train, X_train, y_train, X_validate, y_validate, X_test, y_test = split_xy(
