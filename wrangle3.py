@@ -317,6 +317,8 @@ def wrangle():
     df = handle_missing_values(df)
     df = create_features(df)
     df = remove_outliers(df)
+    df.latitude = df.latitude/1000000
+    df.longitude = df.longitude/1000000
     train, validate, test = split_my_data(df)
     train['logerror_bins'] = pd.cut(
         train.logerror, [-5, -.2, -.05, .05, .2, 4])
@@ -332,4 +334,57 @@ def wrangle():
     centroid_df = get_centroids(kmeans, cluster_vars, cluster_name)
     X_train['area_cluster'] = kmeans.predict(X_train[cluster_vars])
     X_validate['area_cluster'] = kmeans.predict(X_validate[cluster_vars])
+    k = 7
+    cluster_name = 'size_cluster'
+    cluster_vars = ['scaled_bathroomcnt',
+                    'sqft_bin', 'acres_bin', 'bath_bed_ratio']
+    # fit kmeans
+    kmeans = create_clusters(X_train, k, cluster_vars)
+    # get centroid values per variable per cluster
+    centroid_df = get_centroids(kmeans, cluster_vars, cluster_name)
+    X_train['size_cluster'] = kmeans.predict(X_train[cluster_vars])
+    X_validate['size_cluster'] = kmeans.predict(X_validate[cluster_vars])
+
+    k = 5
+    cluster_name = 'price_cluster'
+    cluster_vars = ['taxrate',
+                    'structure_dollar_sqft_bin', 'lot_dollar_sqft_bin']
+
+    # fit kmeans
+    kmeans = create_clusters(X_train, k, cluster_vars)
+
+    # get centroid values per variable per cluster
+    centroid_df = get_centroids(kmeans, cluster_vars, cluster_name)
+    X_train['price_cluster'] = kmeans.predict(X_train[cluster_vars])
+    X_validate['price_cluster'] = kmeans.predict(X_validate[cluster_vars])
+    # Add english names to clusters
+
+    X_train['area_cluster'] = X_train.area_cluster.map({
+        0: "santa_clarita",
+        1: "se_coast",
+        2: "palmdale_landcaster",
+        3: "la_older",
+        4: "la_newer",
+        5: "northwest_costal"
+    })
+
+    X_train['price_cluster'] = X_train.price_cluster.map({
+        0: "a",
+        1: "b",
+        2: "c",
+        3: "d",
+        4: "e",
+    })
+    X_train['size_cluster'] = X_train.size_cluster.map({
+        0: "a",
+        1: "b",
+        2: "c",
+        3: "d",
+        4: "e",
+        5: "f",
+        6: "g",
+    })
+    dummy_df = pd.get_dummies(
+        X_train[['area_cluster', 'size_cluster', 'price_cluster']], drop_first=False)
+    X_train = pd.concat([X_train, dummy_df], axis=1)
     return train, X_train, y_train, X_validate, y_validate, X_test, y_test
