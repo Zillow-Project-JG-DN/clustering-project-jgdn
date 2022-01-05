@@ -93,10 +93,12 @@ def add_county(df):
     '''
     Add column for counties
     '''
-    import numpy as np
-    df['county'] = np.where(df.fips == 6037, 'Los_Angeles',
-                            np.where(df.fips == 6059, 'Orange',
-                                     'Ventura'))
+    df['county'] = df['fips'].replace({6037:'LA',6059: 'Orange',6111:'Ventura'})
+    # import numpy as np
+    # df['county'] = np.where(df.fips == 6037, 'Los_Angeles')
+    # df['county'] = np.where(df.fips == 6059, 'Orange')
+    # df['county'] = np.where(df.fips == 6111, 'Ventura')
+    
     return df
 
 
@@ -116,15 +118,15 @@ def remove_columns(df, cols_to_remove):
     return df
 
 
-def clean(df):
-    # replace nulls with median values for select columns
-    df.lotsizesquarefeet.fillna(7313, inplace=True)
-    # Columns to look for outliers
-    df = df[df.taxvaluedollarcnt < 5_000_000]
-    df[df.calculatedfinishedsquarefeet < 8000]
-    # Just to be sure we caught all nulls, drop them here
-    df = df.dropna()
-    return df
+# def clean(df):
+#     # replace nulls with median values for select columns
+#     df.lotsizesquarefeet.fillna(7313, inplace=True)
+#     # Columns to look for outliers
+#     df = df[df.taxvaluedollarcnt < 5_000_000]
+#     df[df.calculatedfinishedsquarefeet < 8000]
+#     # Just to be sure we caught all nulls, drop them here
+#     df = df.dropna()
+#     return df
 
 
 def remove_outliers(df, col_list, k=1.5):
@@ -215,7 +217,7 @@ def wrangle():
     df = single_use(df)
     df = add_county(df)
     df = handle_missing_values(df)
-    df = clean(df)
+    df = df.dropna()
     train, validate, test = split_my_data(df)
     train, validate, test = add_baseline(train, validate, test)
     train, X_train, y_train, X_validate, y_validate, X_test, y_test = split_xy(
