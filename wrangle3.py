@@ -410,7 +410,11 @@ def wrangle():
         5: "f",
         6: "g",
     })
+
     dummy_df = pd.get_dummies(
         X_train[['area_cluster', 'size_cluster', 'price_cluster']], drop_first=False)
     X_train = pd.concat([X_train, dummy_df], axis=1)
+    dummy_df2 = pd.get_dummies(
+        X_validate[['area_cluster', 'size_cluster', 'price_cluster']], drop_first=False)
+    X_validate = pd.concat([X_validate, dummy_df2], axis=1)
     return train, X_train, y_train, X_validate, y_validate, X_test, y_test
