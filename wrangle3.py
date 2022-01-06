@@ -384,6 +384,32 @@ def wrangle():
         5: "f",
         6: "g",
     })
+
+    X_validate['area_cluster'] = X_validate.area_cluster.map({
+        0: "santa_clarita",
+        1: "se_coast",
+        2: "palmdale_landcaster",
+        3: "la_older",
+        4: "la_newer",
+        5: "northwest_costal"
+    })
+
+    X_validate['price_cluster'] = X_validate.price_cluster.map({
+        0: "a",
+        1: "b",
+        2: "c",
+        3: "d",
+        4: "e",
+    })
+    X_validate['size_cluster'] = X_validate.size_cluster.map({
+        0: "a",
+        1: "b",
+        2: "c",
+        3: "d",
+        4: "e",
+        5: "f",
+        6: "g",
+    })
     dummy_df = pd.get_dummies(
         X_train[['area_cluster', 'size_cluster', 'price_cluster']], drop_first=False)
     X_train = pd.concat([X_train, dummy_df], axis=1)
