@@ -1,0 +1,8 @@
+Model,Method,Features,train_rmse,train_r2,validate_rmse,validate_r2,train-validate_rmse,train_percent_change_rmse_baseline,validate_percent_change_rmse_baseline
+baseline,mean,mean logerror,0.1747252013,0,0.1701500784,0,0.004575122937,,
+model1,ols,"area, size, and price clusters",0.1743440832,0.004357728068,0.1698760587,0.003218323673,0.004468024486,-0.2181242945,-0.1610458625
+model2,ols,"geoclusters, bathroomcnt, bedroomcnt, calculatedfinishedsquarefeet, acres, age",0.174450374,0.00314334889,0.1699489534,0.00236269193,0.004501420642,-0.157291147,-0.118204458
+model3,ols,"geoclusters, taxamount, taxvaluedollarcnt, structuretaxvaluedollarcnt, landtaxvaluedollarcnt, acres, age",0.1745162598,0.002390228614,0.1700978619,0.0006136755046,0.0044183979,-0.1195829311,-0.03068848414
+model4,ols,"taxvaluedollarcnt, structuretaxvaluedollarcnt, taxvaluedollarcnt, landtaxvaluedollarcnt, acres, age",0.1746586876,0.0007612070588,0.1701329814,0.0002009537706,0.004525706258,-0.03806759865,-0.01004819336
+model5,ols,"geoglusters, size clusters, price clusters, taxvaluedollarcnt, structuretaxvaluedollarcnt, landtaxvaluedollarcnt, taxamount",0.1743165548,0.004672120838,0.1698002294,0.004108011865,0.004516325376,-0.2338795401,-0.2056119747
+model6,ols,all clusters,0.1743343874,0.004468465841,0.1698399533,0.003641990562,0.004494434182,-0.2236734411,-0.1822656319
