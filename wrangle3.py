@@ -386,20 +386,20 @@ def wrangle():
     })
 
     X_train['price_cluster'] = X_train.price_cluster.map({
-        0: "a",
-        1: "b",
-        2: "c",
-        3: "d",
-        4: "e",
+        0: "420000_to_870000",
+        1: "45000_to_173000",
+        2: "69000_to_210000",
+        3: "144000_to_355000",
+        4: "34000_to_110000",
     })
     X_train['size_cluster'] = X_train.size_cluster.map({
-        0: "a",
-        1: "b",
-        2: "c",
-        3: "d",
-        4: "e",
-        5: "f",
-        6: "g",
+        0: "1300_to_2000",
+        1: "1250_to_1650",
+        2: "1500_to_1900",
+        3: "2900_to_4000",
+        4: "2300_to_4400",
+        5: "1500_to_2800",
+        6: "900_to_1200",
     })
 
     X_train['tax_cluster'] = X_train.tax_cluster.map({
