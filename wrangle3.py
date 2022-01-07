@@ -357,6 +357,23 @@ def wrangle():
     centroid_df = get_centroids(kmeans, cluster_vars, cluster_name)
     X_train['price_cluster'] = kmeans.predict(X_train[cluster_vars])
     X_validate['price_cluster'] = kmeans.predict(X_validate[cluster_vars])
+
+    # create tax clusters
+    k = 5
+    cluster_name = 'tax_cluster'
+    cluster_vars = ['taxamount', 'taxvaluedollarcnt',
+                    'structuretaxvaluedollarcnt', 'landtaxvaluedollarcnt']
+
+    # fit kmeans
+    kmeans = create_clusters(X_train, k, cluster_vars)
+    kmeans = create_clusters(X_validate, k, cluster_vars)
+
+    X_train['tax_cluster'] = kmeans.predict(X_train[cluster_vars])
+    X_validate['tax_cluster'] = kmeans.predict(X_validate[cluster_vars])
+
+    # get centroid values per variable per cluster
+    centroid_df = get_centroids(kmeans, cluster_vars, cluster_name)
+
     # Add english names to clusters
 
     X_train['area_cluster'] = X_train.area_cluster.map({
@@ -385,6 +402,22 @@ def wrangle():
         6: "g",
     })
 
+    X_train['tax_cluster'] = X_train.tax_cluster.map({
+        0: "1000_to_3000",
+        1: "30000_to_40000",
+        2: "8500_to_12000",
+        3: "16000_to_22000",
+        4: "5000_to_6000",
+    })
+
+    X_validate['tax_cluster'] = X_validate.tax_cluster.map({
+        0: "1000_to_3000",
+        1: "30000_to_40000",
+        2: "8500_to_12000",
+        3: "16000_to_22000",
+        4: "5000_to_6000",
+    })
+
     X_validate['area_cluster'] = X_validate.area_cluster.map({
         0: "santa_clarita",
         1: "se_coast",
@@ -395,26 +428,30 @@ def wrangle():
     })
 
     X_validate['price_cluster'] = X_validate.price_cluster.map({
-        0: "a",
-        1: "b",
-        2: "c",
-        3: "d",
-        4: "e",
+        0: "420000_to_870000",
+        1: "45000_to_173000",
+        2: "69000_to_210000",
+        3: "144000_to_355000",
+        4: "34000_to_110000",
     })
     X_validate['size_cluster'] = X_validate.size_cluster.map({
-        0: "a",
-        1: "b",
-        2: "c",
-        3: "d",
-        4: "e",
-        5: "f",
-        6: "g",
+        0: "1300_to_2000",
+        1: "1250_to_1650",
+        2: "1500_to_1900",
+        3: "2900_to_4000",
+        4: "2300_to_4400",
+        5: "1500_to_2800",
+        6: "900_to_1200",
     })
 
     dummy_df = pd.get_dummies(
-        X_train[['area_cluster', 'size_cluster', 'price_cluster']], drop_first=False)
+        X_train[['area_cluster', 'size_cluster', 'price_cluster', 'tax_cluster']], drop_first=False)
+
     X_train = pd.concat([X_train, dummy_df], axis=1)
+
     dummy_df2 = pd.get_dummies(
-        X_validate[['area_cluster', 'size_cluster', 'price_cluster']], drop_first=False)
+        X_validate[['area_cluster', 'size_cluster', 'price_cluster', 'tax_cluster']], drop_first=False)
+
     X_validate = pd.concat([X_validate, dummy_df2], axis=1)
+
     return train, X_train, y_train, X_validate, y_validate, X_test, y_test
