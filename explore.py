@@ -235,5 +235,5 @@ def taxvaluedollarcnt_corr():
     
     else : 
         print("Fail to reject the null hypothesis.")
-    sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
-    #sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
+    #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
