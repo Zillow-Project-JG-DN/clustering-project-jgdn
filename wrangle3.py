@@ -453,5 +453,7 @@ def wrangle():
         X_validate[['area_cluster', 'size_cluster', 'price_cluster', 'tax_cluster']], drop_first=False)
 
     X_validate = pd.concat([X_validate, dummy_df2], axis=1)
-
+    train2 = X_train
+    train2['logerror'] = y_train
+    train = train2
     return train, X_train, y_train, X_validate, y_validate, X_test, y_test
