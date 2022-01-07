@@ -100,13 +100,13 @@ def plot_size_clusters():
         #get data from wrangle
     train, X_train, y_train, X_validate, y_validate, X_test, y_test=wrangle3.wrangle()
     #
-    s0=X_train[X_train['size_cluster']=='a']
-    s1=X_train[X_train['size_cluster']=='b']
-    s2=X_train[X_train['size_cluster']=='c']
-    s3=X_train[X_train['size_cluster']=='d']
-    s4=X_train[X_train['size_cluster']=='e']
-    s5=X_train[X_train['size_cluster']=='f']
-    s6=X_train[X_train['size_cluster']=='g']
+    s0=X_train[X_train['size_cluster']=='1300_to_2000']
+    s1=X_train[X_train['size_cluster']=='1250_to_1650']
+    s2=X_train[X_train['size_cluster']=='1500_to_1900']
+    s3=X_train[X_train['size_cluster']=='2900_to_4000']
+    s4=X_train[X_train['size_cluster']=='2300_to_4400']
+    s5=X_train[X_train['size_cluster']=='1500_to_2800']
+    s6=X_train[X_train['size_cluster']=='900_to_1200']
 
         #Plot size clusters
     fig, axes = plt.subplots(4,2, sharex=False, figsize=(20, 25))
@@ -127,18 +127,20 @@ def plot_size_clusters():
     axes[0,0].ticklabel_format(style='plain')
     axes[0,0].set_title('Size clusters superimposed')
     axes[0,1].ticklabel_format(style='plain')
-    axes[0,1].set_title('Cluster a')
+    axes[0,1].set_title('Cluster: 1300_to_2000')
 
     axes[1,0].ticklabel_format(style='plain')
-    axes[1,0].set_title('Cluster b')
+    axes[1,0].set_title('Cluster: 1250_to_1650')
     axes[1,1].ticklabel_format(style='plain')
-    axes[1,1].set_title('Cluster c')
+    axes[1,1].set_title('Cluster: 1500_to_1900')
     axes[2,0].ticklabel_format(style='plain')
-    axes[2,0].set_title('Cluster d')
+    axes[2,0].set_title('Cluster: 2900_to_4000')
+    axes[2,1].ticklabel_format(style='plain')
+    axes[2,1].set_title('Cluster: 2300_to_4400')
     axes[3,0].ticklabel_format(style='plain')
-    axes[3,0].set_title('Cluster e')
+    axes[3,0].set_title('Cluster: 1500_to_2800')
     axes[3,1].ticklabel_format(style='plain')
-    axes[3,1].set_title('Cluster f')
+    axes[3,1].set_title('Cluster: 900_to_1200')
 
     sns.histplot(data=s0, x='calculatedfinishedsquarefeet', alpha=0.5, color='red', ax=axes[0,1])
     sns.histplot(data=s1, x='calculatedfinishedsquarefeet', alpha=0.5, color='orange', ax=axes[1,0])
@@ -161,11 +163,11 @@ def plot_prices_clusters():
     # Plot prices for plot clusters
     fig, axes = plt.subplots(3,2, sharex=False, figsize=(20, 25))
     fig.suptitle('Home prices by Price Cluster')
-    p0=X_train[X_train['price_cluster']=='a']
-    p1=X_train[X_train['price_cluster']=='b']
-    p2=X_train[X_train['price_cluster']=='c']
-    p3=X_train[X_train['price_cluster']=='d']
-    p4=X_train[X_train['price_cluster']=='e']
+    p0=X_train[X_train['price_cluster']=='420000_to_870000']
+    p1=X_train[X_train['price_cluster']=='45000_to_173000']
+    p2=X_train[X_train['price_cluster']=='69000_to_210000']
+    p3=X_train[X_train['price_cluster']=='144000_to_355000']
+    p4=X_train[X_train['price_cluster']=='34000_to_110000']
 #axes[0].set_title('All clusters together')
 #axes[1].set_title('Cluster a')
 #axes[2].set_title('Cluster b')
@@ -180,21 +182,68 @@ def plot_prices_clusters():
     axes[0,0].ticklabel_format(style='plain')
     axes[0,0].set_title('Price clusters superimposed')
     axes[0,1].ticklabel_format(style='plain')
-    axes[0,1].set_title('Cluster a')
+    axes[0,1].set_title('Cluster: 420000_to_870000')
     axes[1,0].ticklabel_format(style='plain')
-    axes[1,0].set_title('Cluster b')
+    axes[1,0].set_title('Cluster: 45000_to_173000')
     axes[1,1].ticklabel_format(style='plain')
-    axes[1,1].set_title('Cluster c')
+    axes[1,1].set_title('Cluster: 69000_to_210000')
     axes[2,0].ticklabel_format(style='plain')
-    axes[2,0].set_title('Cluster d')
+    axes[2,0].set_title('Cluster: 144000_to_355000')
     axes[2,1].ticklabel_format(style='plain')
-    axes[2,1].set_title('Cluster e')
+    axes[2,1].set_title('Cluster: 34000_to_110000')
 
     sns.histplot(data=p0, x='taxvaluedollarcnt', alpha=0.5, color='red', ax=axes[0,1])
     sns.histplot(data=p1, x='taxvaluedollarcnt', alpha=0.5, color='orange', ax=axes[1,0])
     sns.histplot(data=p2, x='taxvaluedollarcnt', alpha=0.5, color='yellow', ax=axes[1,1])
     sns.histplot(data=p3, x='taxvaluedollarcnt', alpha=0.5, color='green', ax=axes[2,0])
     sns.histplot(data=p4, x='taxvaluedollarcnt', alpha=0.5, color='blue', ax=axes[2,1])
+
+    plt.ticklabel_format(style='plain')
+
+    plt.show()
+###########################
+def plot_tax_cluster():
+    #get data from wrangle
+    train, X_train, y_train, X_validate, y_validate, X_test, y_test=wrangle3.wrangle()
+    #labels
+    t0 =X_train[X_train['tax_cluster']=='1000_to_3000']
+    t1 =X_train[X_train['tax_cluster']=='30000_to_40000']
+    t2 =X_train[X_train['tax_cluster']=='8500_to_12000']
+    t3 =X_train[X_train['tax_cluster']=='16000_to_22000']
+    t4 =X_train[X_train['tax_cluster']=='5000_to_6000']
+    #t5 =X_train[X_train['tax_cluster']==5]
+    # Plot tax for plot clusters
+    fig, axes = plt.subplots(3,2, sharex=False, figsize=(20, 25))
+    fig.suptitle('Tax amount by Tax Cluster')
+    #axes[0].set_title('All clusters together')
+    #axes[1].set_title('Cluster a')
+    #axes[2].set_title('Cluster b')
+    #axes[3].set_title('Cluster c')
+    #axes[4].set_title('Cluster d')
+    #axes[5].set_title('Cluster e')
+    sns.histplot(data=t0, x='taxamount', alpha=0.5, color='red', ax=axes[0,0])
+    sns.histplot(data=t1, x='taxamount', alpha=0.5, color='orange', ax=axes[0,0])
+    sns.histplot(data=t2, x='taxamount', alpha=0.5, color='yellow', ax=axes[0,0])
+    sns.histplot(data=t3, x='taxamount', alpha=0.5, color='green', ax=axes[0,0])
+    sns.histplot(data=t4, x='taxamount', alpha=0.5, color='blue', ax=axes[0,0])
+    axes[0,0].ticklabel_format(style='plain')
+    axes[0,0].set_title('Tax clusters superimposed')
+    axes[0,1].ticklabel_format(style='plain')
+    axes[0,1].set_title('Cluster: 1000_to_3000')
+    axes[1,0].ticklabel_format(style='plain')
+    axes[1,0].set_title('Cluster 30000_to_40000')
+    axes[1,1].ticklabel_format(style='plain')
+    axes[1,1].set_title('Cluster 8500_to_12000')
+    axes[2,0].ticklabel_format(style='plain')
+    axes[2,0].set_title('Cluster 16000_to_22000')
+    axes[2,1].ticklabel_format(style='plain')
+    axes[2,1].set_title('Cluster 5000_to_6000')
+
+    sns.histplot(data=t0, x='taxamount', alpha=0.5, color='red', ax=axes[0,1])
+    sns.histplot(data=t1, x='taxamount', alpha=0.5, color='orange', ax=axes[1,0])
+    sns.histplot(data=t2, x='taxamount', alpha=0.5, color='yellow', ax=axes[1,1])
+    sns.histplot(data=t3, x='taxamount', alpha=0.5, color='green', ax=axes[2,0])
+    sns.histplot(data=t4, x='taxamount', alpha=0.5, color='blue', ax=axes[2,1])
 
     plt.ticklabel_format(style='plain')
 
