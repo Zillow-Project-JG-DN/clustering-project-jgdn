@@ -288,7 +288,7 @@ def taxvaluedollarcnt_corr():
     sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
 
 ########
-def calculatedfinishedsquarefeet_corr():
+def calculatedfinishedsquarefeet_pearsonr():
     ''' Runs a pearsons r test between the calculatedfinishedsquarefeet and logerror,
     plots a box plot'''
     #get data from wrangle
@@ -309,12 +309,12 @@ def calculatedfinishedsquarefeet_corr():
     if p < α:
         print(f"Reject null hypothesis:\n '{null_hypothesis}'")
         print('\n')
-        print(f"We now move forward with our alternative hypothesis: '{alt_hypothesis}'")
+        print(f"We now move forward with our alternative hypothesis: \n '{alt_hypothesis}'")
         print('\n')
         #if 0 < corr < .5:
             #print("This is a weak positive correlation.")
         if 0 < corr < 1:
-            print("This is positive correlation.")
+            print("This is positive correlation with a low p-value.")
         elif -.5 < corr < 0:
             print("This is a weak negative correlation.")
         elif -1 < corr < -.5:
@@ -323,4 +323,80 @@ def calculatedfinishedsquarefeet_corr():
     else : 
         print("Fail to reject the null hypothesis.")
     #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
-    sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
+    #sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
+
+########
+def structure_dollar_sqft_bin_pearsonr():
+    ''' Runs a pearsons r test between the structure_dollar_sqft_bin and logerror,
+    plots a box plot'''
+    #get data from wrangle
+    train, X_train, y_train, X_validate, y_validate, X_test, y_test=wrangle3.wrangle()
+    #State hypothesis: 
+    null_hypothesis = "There is no correlation between the structure_dollar_sqft_bin and the logerror"
+    alt_hypothesis = "There is a correlation between the structure_dollar_sqft_bin and logerror"
+    #alpha
+    α = .05
+    # set x and y
+    x = X_train.structure_dollar_sqft_bin
+    y= train.logerror
+    # run it
+    corr, p = stats.pearsonr(x, y)
+    print(f' The correlation between the structure_dollar_sqft_bin and the logerror: {corr:.4f}')
+    print(f' The P value between the structure_dollar_sqft_bin and the logerror:  {p:.4}')
+    print(' ')
+    if p < α:
+        print(f"Reject null hypothesis:\n '{null_hypothesis}'")
+        print('\n')
+        print(f"We now move forward with our alternative hypothesis: \n '{alt_hypothesis}'")
+        print('\n')
+        #if 0 < corr < .5:
+            #print("This is a weak positive correlation.")
+        if 0 < corr < 1:
+            print("This is positive correlation with a low p-value.")
+        elif -.5 < corr < 0:
+            print("This is a negative correlation with a low p-value.")
+        elif -1 < corr < -.5:
+            print("That is a strong negative correlation.")
+    
+    else : 
+        print("Fail to reject the null hypothesis.")
+    #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    #sns.distplot(train.structure_dollar_sqft_bin, kde=True, color='red')
+
+#########
+def scaled_bathroomcnt_pearsonr():
+    ''' Runs a pearsons r test between the scaled_bathroomcnt and logerror,
+    plots a box plot'''
+    #get data from wrangle
+    train, X_train, y_train, X_validate, y_validate, X_test, y_test=wrangle3.wrangle()
+    #State hypothesis: 
+    null_hypothesis = "There is no correlation between the scaled_bathroomcnt and the logerror"
+    alt_hypothesis = "There is a correlation between the scaled_bathroomcnt and logerror"
+    #alpha
+    α = .05
+    # set x and y
+    x = X_train.scaled_bathroomcnt
+    y= train.logerror
+    # run it
+    corr, p = stats.pearsonr(x, y)
+    print(f' The correlation between the scaled_bathroomcnt and the logerror: {corr:.4f}')
+    print(f' The P value between the scaled_bathroomcnt and the logerror:  {p:.4}')
+    print(' ')
+    if p < α:
+        print(f"Reject null hypothesis:\n '{null_hypothesis}'")
+        print('\n')
+        print(f"We now move forward with our alternative hypothesis: \n '{alt_hypothesis}'")
+        print('\n')
+        #if 0 < corr < .5:
+            #print("This is a weak positive correlation.")
+        if 0 < corr < 1:
+            print("This is positive correlation with a low p-value.")
+        elif -.5 < corr < 0:
+            print("This is a weak negative correlation.")
+        elif -1 < corr < -.5:
+            print("That is a strong negative correlation.")
+    
+    else : 
+        print("Fail to reject the null hypothesis.")
+    #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    #sns.distplot(train.scaled_bathroomcnt, kde=True, color='red')
