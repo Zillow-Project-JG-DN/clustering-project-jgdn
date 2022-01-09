@@ -1,6 +1,6 @@
 # classification-project
 
-The repository contains the files for Daniel Northcutt and Jared Godar's Codeup project on clustering and modeling of zillo real estate data to predict error estimates
+The repository contains the files for Daniel Northcutt and Jared Godar's Codeup project on clustering and modeling of zillow real estate data to predict error estimates
 
 ---
 
@@ -39,91 +39,6 @@ A home is often the most expensive purchase one makes in their lifetime. Having 
 - Which model evaluation metrics are most sensitive to this primary feature?
 
 ---
-
-## Data Dictionary
-
-|Target|Datatype|Definition|
-|:-------|:--------|:----------|
-| error | float64 | error in estimate (in dollars?)|
-</br>
-</br>
-| variable  |     Dtype    | Definition |
-|:----------|:-----------------------|:-----------|
-|bedrooms    | float64 | Number of bedrooms |
-|bathrooms   | float64 | Number of bathrooms |
-|square_feet |  int64 | Area in square feet |
-|year |  int64 | Year built |
-|taxes       | float64 | Tax amount dollars |
-|fips_number   |   int64 | Area code |
-|zip_code      |   category | Zip Code |
-|county_Orange      |   unit8 | Encoded county information |
-|county_Ventura      |   unit8 | Encoded county information |
-|county_avg (engineered) |  float64 | Average home price in county |
-|baseline  (engineered) |  float64 | baseline |
-
-</br>
-</br>
-
----
-
-### Steps to Reproduce
-
-You will need your own env file with database credentials along with all the necessary files listed below to run my final project notebook. 
-- [x] Read this README.md.
-- [ ] Download the `acquire.py`, `prepare.py`, and `clustering_report.ipynb` files into your working directory.
-- [ ] Add your own `env` file to your directory. (user, password, host).
-- [ ] Run the `clustering_report.ipynb` workbook.
-
-
----
-
-### The Plan
-
-![story map](clustering_story_map.jpg)
-
-1. **Acquire, clean, prepare, and split the data:**
-    - Pull from Zillo database.
-    - Eliminate any unnecessary or redundant fields.
-    - Engineer new, potentially informative features.
-    - Search for null values and respond appropriately (delete, impute, etc.).
-    - Deal with outliers.
-    - Scale data appropriately.
-    - Divide the data in to training, validation, and testing sets (~50-30-20 splits)
-2. **Exploratory data analysis:**
-    - Visualize pairwise relationships looking for correlation with home value.
-    - Note any interesting correlations or other findings.
-    - Test presumptive relationships for statistical significance.
-    - Think of what features would be most useful for model.
-    - Employ clustering to look for relationships between specific sub-groups.
-    - Record any other interesting observations or findings.
-    *NOTE: This data analysis will be limited to the training dataset*
-3. **Model generation, assessment, and optimization:**
-    - Establish baseline performance (mean model error, assuming error is normally distributed).
-    - Generate a basic regression model using only strongest drivers.
-    - Calculate evaluation metrics to assess quality of models (RMSE, R^2, and p as primary metrics).
-    - Generate additional models incorporating other existing fields.
-    - Use k-best and recursive feature selection to determine features.
-    - Engineer additional features to use in other models.
-    - Evaluate ensemble of better models on validation data to look for overfitting.
-    - Select the highest performing model.
-    - Test that model with the previously unused and unseen test data once and only once.
-4. **Streamline presentation**
-    - Take only the most relative information from the working along and create a succinct report that walks through the rationale, steps, code, and observations for the entire data science pipeline of acquiring, cleaning, preparing, modeling, evaluating, and testing our model.
-    - Outline next steps for this project:
-        - What can be done to improve this model?
-        - What does this error model tell us about the estimate model?
-        - How can these results inform 0
-
----
-
-### Key Findings
-
-- Most important factors 
-- Factors that don't matter
-- Model performance
-- Improvement over baseline
-- Counties
-
 
 # Data Dictionary
 | Feature                    | Datatype               | Description                                                           |
@@ -196,3 +111,68 @@ tax_cluster_30000_to_40000    |            uint8       | tax cluster
 tax_cluster_5000_to_6000      |            uint8       | tax cluster
 tax_cluster_8500_to_12000     |            uint8       | tax cluster
 logerror                      |          float64       | log error - target variable
+</br>
+</br>
+
+---
+
+### Steps to Reproduce
+
+You will need your own env file with database credentials along with all the necessary files listed below to run my final project notebook. 
+- [x] Read this README.md.
+- [ ] Download the `acquire.py`, `prepare.py`, and `clustering_report.ipynb` files into your working directory.
+- [ ] Add your own `env` file to your directory. (user, password, host).
+- [ ] Run the `clustering_report.ipynb` workbook.
+
+
+---
+
+### The Plan
+
+![story map](clustering_story_map.jpg)
+
+1. **Acquire, clean, prepare, and split the data:**
+    - Pull from Zillow database.
+    - Eliminate any unnecessary or redundant fields.
+    - Engineer new, potentially informative features.
+    - Search for null values and respond appropriately (delete, impute, etc.).
+    - Deal with outliers.
+    - Scale data appropriately.
+    - Divide the data in to training, validation, and testing sets (~50-30-20 splits)
+2. **Exploratory data analysis:**
+    - Visualize pairwise relationships looking for correlation with home value.
+    - Note any interesting correlations or other findings.
+    - Test presumptive relationships for statistical significance.
+    - Think of what features would be most useful for model.
+    - Employ clustering to look for relationships between specific sub-groups.
+    - Record any other interesting observations or findings.
+    *NOTE: This data analysis will be limited to the training dataset*
+3. **Model generation, assessment, and optimization:**
+    - Establish baseline performance (mean model error, assuming error is normally distributed).
+    - Generate a basic regression model using only strongest drivers.
+    - Calculate evaluation metrics to assess quality of models (RMSE, R^2, and p as primary metrics).
+    - Generate additional models incorporating other existing fields.
+    - Use k-best and recursive feature selection to determine features.
+    - Engineer additional features to use in other models.
+    - Evaluate ensemble of better models on validation data to look for overfitting.
+    - Select the highest performing model.
+    - Test that model with the previously unused and unseen test data once and only once.
+4. **Streamline presentation**
+    - Take only the most relative information from the working along and create a succinct report that walks through the rationale, steps, code, and observations for the entire data science pipeline of acquiring, cleaning, preparing, modeling, evaluating, and testing our model.
+    - Outline next steps for this project:
+        - What can be done to improve this model?
+        - What does this error model tell us about the estimate model?
+        - How can these results inform 0
+
+---
+
+### Key Findings
+
+- Most important factors 
+- Factors that don't matter
+- Model performance
+- Improvement over baseline
+- Counties
+
+
+
