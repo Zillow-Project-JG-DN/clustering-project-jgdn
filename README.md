@@ -1,6 +1,6 @@
 # classification-project
 
-The repository contains the files for Daniel Northcutt and Jared Godar's Codeup project on clustering and modeling of zillo real estate data to predict error estimates
+The repository contains the files for Daniel Northcutt and Jared Godar's Codeup project on clustering and modeling of zillow real estate data to predict error estimates
 
 ---
 
@@ -40,27 +40,77 @@ A home is often the most expensive purchase one makes in their lifetime. Having 
 
 ---
 
-## Data Dictionary
-
-|Target|Datatype|Definition|
-|:-------|:--------|:----------|
-| error | float64 | error in estimate (in dollars?)|
-</br>
-</br>
-| variable  |     Dtype    | Definition |
-|:----------|:-----------------------|:-----------|
-|bedrooms    | float64 | Number of bedrooms |
-|bathrooms   | float64 | Number of bathrooms |
-|square_feet |  int64 | Area in square feet |
-|year |  int64 | Year built |
-|taxes       | float64 | Tax amount dollars |
-|fips_number   |   int64 | Area code |
-|zip_code      |   category | Zip Code |
-|county_Orange      |   unit8 | Encoded county information |
-|county_Ventura      |   unit8 | Encoded county information |
-|county_avg (engineered) |  float64 | Average home price in county |
-|baseline  (engineered) |  float64 | baseline |
-
+# Data Dictionary
+| Feature                    | Datatype               | Description                                                           |
+|:---------------------------|:-----------------------|:----------------------------------------------------------------------|
+bathroomcnt                  |          float64       | bathroom count
+bedroomcnt                   |          float64       | bedroom count
+calculatedfinishedsquarefeet |          float64       | calc finished square feet
+fips                         |          float64       | fips (county)
+latitude                     |          float64       | latitude
+longitude                    |          float64       | longitude
+lotsizesquarefeet            |          float64       | lot size square feet
+regionidcity                 |          float64       | city region
+regionidcounty               |           float64       | city county
+regionidzip                  |           float64       | city zip
+yearbuilt                    |           float64       | year built
+structuretaxvaluedollarcnt   |           float64       | structure tax value count
+taxvaluedollarcnt            |           float64       | tax value count
+landtaxvaluedollarcnt        |           float64       | land value count
+taxamount                    |           float64       | tax amount
+county                       |            object       | county name
+age                          |           float64       | age of home
+age_bin                      |           float64       | age bins of homes
+taxrate                      |           float64       | tax rate
+acres                        |           float64       | acres
+acres_bin                    |           float64       | acre bin of homes
+sqft_bin                     |           float64       | squarefoot bin of homes
+structure_dollar_per_sqft    |           float64       | structure dollar per sqft
+structure_dollar_sqft_bin    |           float64       | structure dollar per sqft bins 
+land_dollar_per_sqft         |           float64       | land dollar per sqft
+lot_dollar_sqft_bin          |           float64       | lot dollar per sqft
+bath_bed_ratio               |           float64       | bath to bed ratio
+cola                         |             int64       | cola
+logerror_bins                |          category       | bin of logerror
+baseline                     |           float64       | baseline target to beat
+scaled_latitude              |           float64       | scaled latitude
+scaled_longitude             |           float64       | scaled longitude
+scaled_bathroomcnt           |           float64       | scaled bathroom count
+scaled_taxrate               |           float64       | scaled tax rate
+scaled_bedroomcnt            |           float64       | scaled bedroom count
+scaled_lotsizesquarefeet     |           float64       | scaled lot size sqft
+scaled_age                   |           float64       | scaled age of homes
+scaled_acres                 |           float64       | scaled acres
+scaled_bath_bed_ratio        |           float64       | scaled bath bed ratio
+scaled_calculatedfinishedsquarefeet|     float64       | scaled calc sqft
+area_cluster                 |            object       | area cluster grouping
+size_cluster                 |            object       | size cluster grouping
+price_cluster                |            object       | price cluster grouping
+tax_cluster                  |            object       | tax cluster grouping
+area_cluster_la_newer        |             uint8       | la newer area cluster
+area_cluster_la_older        |             uint8       | la older area cluster
+area_cluster_northwest_costal|             uint8       | northwest costal area cluster
+area_cluster_palmdale_landcaster |         uint8       | palmdale-landcaster area cluster
+area_cluster_santa_clarita   |             uint8       | santa clarita area cluster
+area_cluster_se_coast        |             uint8       | se coast area cluster
+size_cluster_1250_to_1650    |             uint8       | size cluster
+size_cluster_1300_to_2000    |             uint8       | size cluster 
+size_cluster_1500_to_1900    |             uint8       | size cluster 
+size_cluster_1500_to_2800    |             uint8       | size cluster 
+size_cluster_2300_to_4400    |             uint8       | size cluster 
+size_cluster_2900_to_4000    |             uint8       | size cluster 
+size_cluster_900_to_1200     |             uint8       | size cluster 
+price_cluster_144000_to_355000|            uint8       | price cluster 
+price_cluster_34000_to_110000 |            uint8       | price cluster 
+price_cluster_420000_to_870000|            uint8       | price cluster
+price_cluster_45000_to_173000 |            uint8       | price cluster
+price_cluster_69000_to_210000 |            uint8       | price cluster
+tax_cluster_1000_to_3000      |            uint8       | tax cluster
+tax_cluster_16000_to_22000    |            uint8       | tax cluster
+tax_cluster_30000_to_40000    |            uint8       | tax cluster
+tax_cluster_5000_to_6000      |            uint8       | tax cluster
+tax_cluster_8500_to_12000     |            uint8       | tax cluster
+logerror                      |          float64       | log error - target variable
 </br>
 </br>
 
@@ -82,7 +132,7 @@ You will need your own env file with database credentials along with all the nec
 ![story map](clustering_story_map.jpg)
 
 1. **Acquire, clean, prepare, and split the data:**
-    - Pull from Zillo database.
+    - Pull from Zillow database.
     - Eliminate any unnecessary or redundant fields.
     - Engineer new, potentially informative features.
     - Search for null values and respond appropriately (delete, impute, etc.).
@@ -123,3 +173,6 @@ You will need your own env file with database credentials along with all the nec
 - Model performance
 - Improvement over baseline
 - Counties
+
+
+
