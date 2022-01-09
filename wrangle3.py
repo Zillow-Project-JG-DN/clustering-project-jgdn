@@ -359,6 +359,7 @@ def wrangle():
     X_validate['price_cluster'] = kmeans.predict(X_validate[cluster_vars])
 
     # create tax clusters
+    # DId not use cluster because created on undscaled values, invalid
     k = 5
     cluster_name = 'tax_cluster'
     cluster_vars = ['taxamount', 'taxvaluedollarcnt',
