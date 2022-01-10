@@ -120,9 +120,9 @@ logerror                      |          float64       | log error - target vari
 
 You will need your own env file with database credentials along with all the necessary files listed below to run my final project notebook. 
 - [x] Read this README.md.
-- [ ] Download the `acquire.py`, `prepare.py`, and `clustering_report.ipynb` files into your working directory.
+- [ ] Download the `wrangle4.py`, `explore.py`, and `modelipynb` files into your working directory.
 - [ ] Add your own `env` file to your directory. (user, password, host).
-- [ ] Run the `clustering_report.ipynb` workbook.
+- [ ] Run the `report_notebook2.ipynb` workbook.
 
 
 ---
@@ -159,20 +159,28 @@ You will need your own env file with database credentials along with all the nec
     - Test that model with the previously unused and unseen test data once and only once.
 4. **Streamline presentation**
     - Take only the most relative information from the working along and create a succinct report that walks through the rationale, steps, code, and observations for the entire data science pipeline of acquiring, cleaning, preparing, modeling, evaluating, and testing our model.
-    - Outline next steps for this project:
-        - What can be done to improve this model?
-        - What does this error model tell us about the estimate model?
-        - How can these results inform 0
+    - Run the explore.py code to run data exploratory analysis of the data thru statistic tests and clustering visualizations
+    - Run the model.py to run the 5 different OLS models for the train and validate datasets followed by running on the testing dataset
+    - 
+5. ** Next Steps/Recommendations:
+    - Thoughtfully impute missing values from the dataset to give a richer training set to explore
+    - Modeling can be tested on other linear regressors (LassoLars, TweedieRegressor, and Poylnomial regression     tuning hyperparameters)
+    - Employ cross-validation techniques while tunning additional models
 
 ---
 
 ### Key Findings
 
-- Most important factors 
-- Factors that don't matter
+- Most important factors:
+    - By incorporating cluster data, our model improved baseline performance nearly 3%.
+    - Clustering provided a greater understanding of our data and allowed modeling that beat the baseline.
+    - Features showed very low correlation with the target variable.
+    - Using scaling, binning, and clustering gave the data a foundation for a stronger model.
 - Model performance
-- Improvement over baseline
-- Counties
+    - Model 5 of 22 features (geoclusters, size clusters, price clusters, taxvaluedollarcnt,           
+    structuretaxvaluedollarcnt, landtaxvaluedollarcnt, taxamount) was the strongest performing model
+    - Tested dataset performed 3% better than the baseline RMSE
+    - All models performed were OLS
 
 
 
