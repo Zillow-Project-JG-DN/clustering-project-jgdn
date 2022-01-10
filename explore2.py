@@ -42,7 +42,7 @@ gmaps.configure(api_key="AIzaSyDlW6BYId6BmIp-mmA_lY_xNiQOKabd-2Q")
 
 
 def find_k(X_train, cluster_vars, k_range):
-    '''plots k for intertia, pct_delta, & delta - aid in finding K target for 
+    '''plots k for intertia, pct_delta, & delta - aid in finding K target for
     clustered features applied to function'''
 
     # enter clusters/features, cluster_name, & range
@@ -112,12 +112,12 @@ def plot_size_clusters():
     # Plot size clusters
     fig, axes = plt.subplots(4, 2, sharex=False, figsize=(20, 25))
     fig.suptitle('Home prices by Price Cluster')
-    #axes[0].set_title('All clusters together')
-    #axes[1].set_title('Cluster a')
-    #axes[2].set_title('Cluster b')
-    #axes[3].set_title('Cluster c')
-    #axes[4].set_title('Cluster d')
-    #axes[5].set_title('Cluster e')
+    # axes[0].set_title('All clusters together')
+    # axes[1].set_title('Cluster a')
+    # axes[2].set_title('Cluster b')
+    # axes[3].set_title('Cluster c')
+    # axes[4].set_title('Cluster d')
+    # axes[5].set_title('Cluster e')
     sns.histplot(data=s0, x='calculatedfinishedsquarefeet',
                  alpha=0.5, color='red', ax=axes[0, 0])
     sns.histplot(data=s1, x='calculatedfinishedsquarefeet',
@@ -183,12 +183,12 @@ def plot_prices_clusters():
     p2 = X_train[X_train['price_cluster'] == '69000_to_210000']
     p3 = X_train[X_train['price_cluster'] == '144000_to_355000']
     p4 = X_train[X_train['price_cluster'] == '34000_to_110000']
-#axes[0].set_title('All clusters together')
-#axes[1].set_title('Cluster a')
-#axes[2].set_title('Cluster b')
-#axes[3].set_title('Cluster c')
-#axes[4].set_title('Cluster d')
-#axes[5].set_title('Cluster e')
+# axes[0].set_title('All clusters together')
+# axes[1].set_title('Cluster a')
+# axes[2].set_title('Cluster b')
+# axes[3].set_title('Cluster c')
+# axes[4].set_title('Cluster d')
+# axes[5].set_title('Cluster e')
     sns.histplot(data=p0, x='taxvaluedollarcnt',
                  alpha=0.5, color='red', ax=axes[0, 0])
     sns.histplot(data=p1, x='taxvaluedollarcnt',
@@ -238,16 +238,16 @@ def plot_tax_cluster():
     t2 = X_train[X_train['tax_cluster'] == '8500_to_12000']
     t3 = X_train[X_train['tax_cluster'] == '16000_to_22000']
     t4 = X_train[X_train['tax_cluster'] == '5000_to_6000']
-    #t5 =X_train[X_train['tax_cluster']==5]
+    # t5 =X_train[X_train['tax_cluster']==5]
     # Plot tax for plot clusters
     fig, axes = plt.subplots(3, 2, sharex=False, figsize=(20, 25))
     fig.suptitle('Tax amount by Tax Cluster')
-    #axes[0].set_title('All clusters together')
-    #axes[1].set_title('Cluster a')
-    #axes[2].set_title('Cluster b')
-    #axes[3].set_title('Cluster c')
-    #axes[4].set_title('Cluster d')
-    #axes[5].set_title('Cluster e')
+    # axes[0].set_title('All clusters together')
+    # axes[1].set_title('Cluster a')
+    # axes[2].set_title('Cluster b')
+    # axes[3].set_title('Cluster c')
+    # axes[4].set_title('Cluster d')
+    # axes[5].set_title('Cluster e')
     sns.histplot(data=t0, x='taxamount', alpha=0.5, color='red', ax=axes[0, 0])
     sns.histplot(data=t1, x='taxamount', alpha=0.5,
                  color='orange', ax=axes[0, 0])
@@ -324,10 +324,12 @@ def taxvaluedollarcnt_corr():
 
     else:
         print("Fail to reject the null hypothesis.")
-    #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    # sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
     sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
 
+
 ########
+<< << << < HEAD
 
 
 def structure_dollar_sqft_bin_pearsonr():
@@ -357,7 +359,7 @@ def structure_dollar_sqft_bin_pearsonr():
             f"We now move forward with our alternative hypothesis:\n '{alt_hypothesis}'")
         print('\n')
         # if 0 < corr < .5:
-        #print("This is a weak positive correlation.")
+        # print("This is a weak positive correlation.")
         if 0 < corr < 1:
             print("This is positive correlation with a low p-value.")
         elif -.5 < corr < 0:
@@ -368,11 +370,15 @@ def structure_dollar_sqft_bin_pearsonr():
     else:
         print("Fail to reject the null hypothesis.")
         print("")
-    #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    # sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
     sns.distplot(train.structure_dollar_sqft_bin, kde=True, color='red')
 
 
 ############
+
+== == == =
+>>>>>> > fb7365adf857c4517a306b97b171dbf65f1b28da
+
 
 def calculatedfinishedsquarefeet_pearsonr():
     ''' Runs a pearsons r test between the calculatedfinishedsquarefeet and logerror,
@@ -401,7 +407,7 @@ def calculatedfinishedsquarefeet_pearsonr():
             f"We now move forward with our alternative hypothesis: '{alt_hypothesis}'")
         print('\n')
         # if 0 < corr < .5:
-        #print("This is a weak positive correlation.")
+        # print("This is a weak positive correlation.")
         if 0 < corr < 1:
             print("This is positive correlation with a low p-value.")
         elif -.5 < corr < 0:
@@ -411,7 +417,7 @@ def calculatedfinishedsquarefeet_pearsonr():
 
     else:
         print("Fail to reject the null hypothesis.")
-    #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    # sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
     sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
 
 ###########
@@ -440,11 +446,94 @@ def scaled_bathroomcnt_pearsonr():
     if p < α:
         print(f"Reject null hypothesis:\n '{null_hypothesis}'")
         print('\n')
+
+
+<< << << < HEAD
         print(
             f"We now move forward with our alternative hypothesis:\n '{alt_hypothesis}'")
+== == == =
+        print(
+            f"We now move forward with our alternative hypothesis: \n '{alt_hypothesis}'")
         print('\n')
         # if 0 < corr < .5:
-        #print("This is a weak positive correlation.")
+            # print("This is a weak positive correlation.")
+        if 0 < corr < 1:
+            print("This is positive correlation with a low p-value.")
+        elif -.5 < corr < 0:
+            print("This is a weak negative correlation.")
+        elif -1 < corr < -.5:
+            print("That is a strong negative correlation.")
+
+    else : 
+        print("Fail to reject the null hypothesis.")
+    # sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    # sns.distplot(train.taxvaluedollarcnt, kde=True, color='red')
+
+########
+def structure_dollar_sqft_bin_pearsonr():
+    ''' Runs a pearsons r test between the structure_dollar_sqft_bin and logerror,
+    plots a box plot'''
+    # get data from wrangle
+    train, X_train, y_train, X_validate, y_validate, X_test, y_test=wrangle3.wrangle()
+    # State hypothesis: 
+    null_hypothesis = "There is no correlation between the structure_dollar_sqft_bin and the logerror"
+    alt_hypothesis = "There is a correlation between the structure_dollar_sqft_bin and logerror"
+    # alpha
+    α = .05
+    # set x and y
+    x = X_train.structure_dollar_sqft_bin
+    y= train.logerror
+    # run it
+    corr, p = stats.pearsonr(x, y)
+    print(f' The correlation between the structure_dollar_sqft_bin and the logerror: {corr:.4f}')
+    print(f' The P value between the structure_dollar_sqft_bin and the logerror:  {p:.4}')
+    print(' ')
+    if p < α:
+        print(f"Reject null hypothesis:\n '{null_hypothesis}'")
+        print('\n')
+        print(f"We now move forward with our alternative hypothesis: \n '{alt_hypothesis}'")
+        print('\n')
+        # if 0 < corr < .5:
+            # print("This is a weak positive correlation.")
+        if 0 < corr < 1:
+            print("This is positive correlation with a low p-value.")
+        elif -.5 < corr < 0:
+            print("This is a negative correlation with a low p-value.")
+        elif -1 < corr < -.5:
+            print("That is a strong negative correlation.")
+    
+    else : 
+        print("Fail to reject the null hypothesis.")
+    # sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    # sns.distplot(train.structure_dollar_sqft_bin, kde=True, color='red')
+
+#########
+def scaled_bathroomcnt_pearsonr():
+    ''' Runs a pearsons r test between the scaled_bathroomcnt and logerror,
+    plots a box plot'''
+    # get data from wrangle
+    train, X_train, y_train, X_validate, y_validate, X_test, y_test=wrangle3.wrangle()
+    # State hypothesis: 
+    null_hypothesis = "There is no correlation between the scaled_bathroomcnt and the logerror"
+    alt_hypothesis = "There is a correlation between the scaled_bathroomcnt and logerror"
+    # alpha
+    α = .05
+    # set x and y
+    x = X_train.scaled_bathroomcnt
+    y= train.logerror
+    # run it
+    corr, p = stats.pearsonr(x, y)
+    print(f' The correlation between the scaled_bathroomcnt and the logerror: {corr:.4f}')
+    print(f' The P value between the scaled_bathroomcnt and the logerror:  {p:.4}')
+    print(' ')
+    if p < α:
+        print(f"Reject null hypothesis:\n '{null_hypothesis}'")
+        print('\n')
+        print(f"We now move forward with our alternative hypothesis: \n '{alt_hypothesis}'")
+>>>>>>> fb7365adf857c4517a306b97b171dbf65f1b28da
+        print('\n')
+        # if 0 < corr < .5:
+        # print("This is a weak positive correlation.")
         if 0 < corr < 1:
             print("This is positive correlation with a low p-value.")
         elif -.5 < corr < 0:
@@ -455,5 +544,9 @@ def scaled_bathroomcnt_pearsonr():
     else:
         print("Fail to reject the null hypothesis.")
         print("")
-    #sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+    # sns.boxplot(y='logerror', x ='taxvaluedollarcnt', data = train, palette='Set2')
+<<<<<<< HEAD
     sns.distplot(train.scaled_bathroomcntn, kde=True, color='red')
+=======
+    # sns.distplot(train.scaled_bathroomcnt, kde=True, color='red')
+>>>>>>> fb7365adf857c4517a306b97b171dbf65f1b28da

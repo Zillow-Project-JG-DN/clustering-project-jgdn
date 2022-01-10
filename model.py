@@ -71,7 +71,13 @@ model4 = ols(formula='logerror ~ taxvaluedollarcnt + structuretaxvaluedollarcnt 
 model5 = ols(formula='logerror ~ area_cluster_la_newer + area_cluster_la_older + area_cluster_northwest_costal + area_cluster_palmdale_landcaster + area_cluster_santa_clarita + area_cluster_se_coast + size_cluster_1250_to_1650 + size_cluster_1300_to_2000 + size_cluster_1500_to_1900 + size_cluster_1500_to_2800 + size_cluster_2300_to_4400 + size_cluster_2900_to_4000 + size_cluster_900_to_1200 + price_cluster_144000_to_355000 + price_cluster_34000_to_110000 + price_cluster_420000_to_870000 + price_cluster_45000_to_173000 + price_cluster_69000_to_210000 + taxvaluedollarcnt + structuretaxvaluedollarcnt  + landtaxvaluedollarcnt + taxamount', data=train).fit()
 # Create OLS Model using encoded clusters
 model6 = ols(formula='logerror ~ area_cluster_la_newer + area_cluster_la_older + area_cluster_northwest_costal + area_cluster_palmdale_landcaster + area_cluster_santa_clarita + area_cluster_se_coast + size_cluster_1250_to_1650 + size_cluster_1300_to_2000 + size_cluster_1500_to_1900 + size_cluster_1500_to_2800 + size_cluster_2300_to_4400 + size_cluster_2900_to_4000 + price_cluster_69000_to_210000 + price_cluster_144000_to_355000 + price_cluster_34000_to_110000 + price_cluster_420000_to_870000 + price_cluster_45000_to_173000 + price_cluster_69000_to_210000 + tax_cluster_1000_to_3000 + tax_cluster_16000_to_22000 + tax_cluster_30000_to_40000 + tax_cluster_5000_to_6000 + tax_cluster_8500_to_12000 ', data=train).fit()
+# Create
+model7 = ols(formula='logerror ~ scaled_latitude +  scaled_longitude + age_bin + scaled_bathroomcnt + sqft_bin + acres_bin + bath_bed_ratio + taxrate + structure_dollar_sqft_bin + lot_dollar_sqft_bin + taxamount + taxvaluedollarcnt + structuretaxvaluedollarcnt + landtaxvaluedollarcnt', data=train).fit()
 #######
+# Create ModeL:
+model8 = ols(formula='logerror ~ scaled_latitude +  scaled_longitude + age_bin + scaled_bathroomcnt + sqft_bin + acres_bin + bath_bed_ratio  + structure_dollar_sqft_bin + lot_dollar_sqft_bin', data=train).fit()
+
+
 train_predictions['baseline_yhat']=train_predictions['actual'].mean ()
 validate_predictions['baseline_yhat']=validate_predictions['actual'].mean()
 train_predictions['baseline_residuals']=train_predictions.baseline_yhat-train_predictions.actual
@@ -236,3 +242,53 @@ def model_6():
 
     print(f'validate_rmse: {validate_model6_RMSE}')
     print(f'validate_model6_r2: {validate_model6_r2}')
+
+######
+
+def model_7():
+    # Make predictions
+    train_predictions['model7_yhat'] = model7.predict(X_train)
+
+    validate_predictions['model7_yhat'] = model7.predict(X_validate)
+
+    train_predictions['model7_residuals']=train_predictions.model7_yhat-train_predictions.actual
+
+    validate_predictions['model7_residuals']=validate_predictions.model7_yhat-validate_predictions.actual
+
+    train_model7_RMSE=(sqrt(mean_squared_error(train_predictions.actual,train_predictions.model7_yhat)))
+    validate_model7_RMSE=(sqrt(mean_squared_error(validate_predictions.actual,validate_predictions.model7_yhat)))
+
+    train_model7_r2 = (r2_score(train_predictions.actual,train_predictions.model7_yhat))
+
+    validate_model7_r2 = (r2_score(validate_predictions.actual,validate_predictions.model7_yhat))
+
+    print(f'train_rmse: {train_model7_RMSE}')
+    print(f'train_r2: {train_model7_r2}')
+
+    print(f'validate_rmse: {validate_model7_RMSE}')
+    print(f'validate_model7_r2: {validate_model7_r2}')
+
+
+##### Model 8
+def model_8():
+    # Make predictions
+    train_predictions['model8_yhat'] = model8.predict(X_train)
+
+    validate_predictions['model8_yhat'] = model8.predict(X_validate)
+
+    train_predictions['model8_residuals']=train_predictions.model8_yhat-train_predictions.actual
+
+    validate_predictions['model8_residuals']=validate_predictions.model8_yhat-validate_predictions.actual
+
+    train_model8_RMSE=(sqrt(mean_squared_error(train_predictions.actual,train_predictions.model8_yhat)))
+    validate_model8_RMSE=(sqrt(mean_squared_error(validate_predictions.actual,validate_predictions.model8_yhat)))
+
+    train_model8_r2 = (r2_score(train_predictions.actual,train_predictions.model8_yhat))
+
+    validate_model8_r2 = (r2_score(validate_predictions.actual,validate_predictions.model8_yhat))
+
+    print(f'train_rmse: {train_model8_RMSE}')
+    print(f'train_r2: {train_model8_r2}')
+
+    print(f'validate_rmse: {validate_model8_RMSE}')
+    print(f'validate_model8_r2: {validate_model8_r2}')
